@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Select Timeslot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2em;
+    }
+    h2 {
+      color: #2c3e50;
+    }
+    select, button {
+      margin-top: 1em;
+      padding: 0.5em;
+    }
+  </style>
+</head>
+<body>
+
+<form class="form-horizontal">
+  <h2>Select an Available Timeslot</h2>
+
+  <p>Hello <strong><span id="firstName"></span> <span id="lastName"></span></strong>.</p>
+  <p>Birthdate: <span id="birthdate"></span></p>
+  <p>Appointment reason: <span id="reason"></span></p>
+  <p>Reported symptoms: <span id="symptoms"></span></p>
+
+  <br/>
+
+  <label for="timeslot">Available slots:</label>
+  <select id="timeslot"
+          cam-variable-name="selectedTimeslot"
+          cam-variable-type="String">
+    <option value="2025-06-15 09:00">2025-06-15 09:00</option>
+    <option value="2025-06-15 10:00">2025-06-15 10:00</option>
+    <option value="2025-06-15 11:30">2025-06-15 11:30</option>
+    <option value="2025-06-16 14:00">2025-06-16 14:00</option>
+    <option value="2025-06-17 08:30">2025-06-17 08:30</option>
+  </select>
+
+  <br/><br/>
+
+  <button type="submit">Submit</button>
+  <button type="button" onclick="alert('Please contact the clinic directly for other availability.')">
+    None of the slots work for me
+  </button>
+</form>
+
+<script cam-script type="text/form-script">
+  camForm.on('form-loaded', function () {
+    document.getElementById("firstName").textContent = camForm.variableManager.variableValue("patientFirstName") || "";
+    document.getElementById("lastName").textContent = camForm.variableManager.variableValue("patientLastName") || "";
+    document.getElementById("birthdate").textContent = camForm.variableManager.variableValue("patientBirthdate") || "";
+    document.getElementById("reason").textContent = camForm.variableManager.variableValue("reason") || "";
+
+    var symptoms = camForm.variableManager.variableValue("symptomesList") || [];
+    document.getElementById("symptoms").textContent = Array.isArray(symptoms) ? symptoms.join(", ") : symptoms;
+  });
+</script>
+
+</body>
+</html>
